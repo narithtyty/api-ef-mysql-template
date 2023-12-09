@@ -1,1 +1,1 @@
-﻿Scaffold-DbContext "server=localhost;database=my_schema;user=root;password=root;" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -Context "AppDbContext" - force
+﻿Scaffold-DbContext "server=localhost;database=my_schema;user=root;password=root;" Pomelo.EntityFrameworkCore.MySql -OutputDir Models/Database -Context "AppDbContext" -force

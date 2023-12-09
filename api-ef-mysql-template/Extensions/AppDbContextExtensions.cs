@@ -1,10 +1,9 @@
-﻿using EntityFrameworkCore.MySQL.Models;
+﻿using api_ef_mysql_template.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 using System.Threading.Tasks;
 
 public static class AppDbContextExtensions

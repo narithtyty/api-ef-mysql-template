@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EntityFrameworkCore.MySQL.Models;
+namespace api_ef_mysql_template.Models.Database;
 
 public partial class Efmigrationshistory
 {

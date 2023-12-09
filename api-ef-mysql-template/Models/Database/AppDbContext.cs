@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.MySQL.Models;
+namespace api_ef_mysql_template.Models.Database;
 
 public partial class AppDbContext : DbContext
 {

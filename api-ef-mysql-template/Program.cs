@@ -1,10 +1,13 @@
 
-using EntityFrameworkCore.MySQL.Models;
+using api_ef_mysql_template.Models.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz.Impl;
+using Quartz.Spi;
+using Quartz;
 
 namespace api_ef_mysql_template
 {
@@ -22,6 +25,18 @@ namespace api_ef_mysql_template
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton(provider => new TokenService("rith_so_cool"));
+
+            builder.Services.AddSingleton<QuartzJobRunner>();
+            builder.Services.AddSingleton<IJobFactory, JobFactory>();
+            builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            builder.Services.AddHostedService<QuartzHostedService>();
+
+            builder.Services.AddScoped<JobExample>();
+            builder.Services.AddSingleton(new JobSchedule(
+                jobName: "JobExample",
+                jobType: typeof(JobExample),
+                cronExpression: "*/30 * * * * ?"));
 
             var app = builder.Build();
 

@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api_ef_mysql_template.Models.Database;
 
-public partial class AppDbContext : DbContext
+public partial class DBContext : DbContext
 {
-    public AppDbContext()
+    public DBContext()
     {
     }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    public DBContext(DbContextOptions<DbContext> options)
         : base(options)
     {
     }

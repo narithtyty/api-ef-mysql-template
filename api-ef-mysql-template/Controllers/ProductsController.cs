@@ -13,10 +13,10 @@ namespace EntityFrameworkCore.MySQL.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly AppDbContext _appDbContext;
-        public ProductsController(AppDbContext appDbContext)
+        private readonly DBContext _DbContext;
+        public ProductsController(DBContext DbContext)
         {
-            _appDbContext = appDbContext;
+            _DbContext = DbContext;
         }
 
         [HttpPost]
@@ -25,8 +25,8 @@ namespace EntityFrameworkCore.MySQL.Controllers
         {
             try
             {
-                _appDbContext.Products.Add(product);
-                await _appDbContext.BulkSaveChangesAsync();
+                _DbContext.Products.Add(product);
+                await _DbContext.BulkSaveChangesAsync();
 
                 return ResponseResult.Success(200, product);
             }
@@ -68,13 +68,13 @@ namespace EntityFrameworkCore.MySQL.Controllers
                 //var resultDirectQuery = await _appDbContext.ExecuteQueryOrStoredProcedure(directSqlQuery, null, pagination);
 
                 string sql = "SELECT * FROM Products";
-                var result = _appDbContext.SqlQuery(sql);
+                var result = _DbContext.SqlQuery(sql);
                 
                 string filePath = "output.xlsx";
                 ExcelExtensions.CreateExcelFile(result, filePath);
 
                 var queryExtensions = new QueryExtensions<Product>();
-                var pageResult = queryExtensions.GetPageResult(_appDbContext.Products.AsQueryable(), 1, 10);
+                var pageResult = queryExtensions.GetPageResult(_DbContext.Products.AsQueryable(), 1, 10);
 
                 return ResponseResult.Success(200, pageResult);
             }catch(Exception ex)
@@ -90,7 +90,7 @@ namespace EntityFrameworkCore.MySQL.Controllers
         {
             try
             {
-                var product = await _appDbContext.Products
+                var product = await _DbContext.Products
                .FirstOrDefaultAsync(p => p.Id == id);
 
                 if (product == null)
@@ -118,8 +118,8 @@ namespace EntityFrameworkCore.MySQL.Controllers
                     { "@Id", 2 },
                 };
 
-                int affectedRows = _appDbContext.ExecuteSqlCommand(sql, parameters);
-                _appDbContext.DisposeContext();
+                int affectedRows = _DbContext.ExecuteSqlCommand(sql, parameters);
+                _DbContext.DisposeContext();
                 return ResponseResult.Success(affectedRows);
             }
             catch (Exception ex)

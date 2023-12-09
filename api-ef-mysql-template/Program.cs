@@ -19,7 +19,7 @@ namespace api_ef_mysql_template
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            builder.Services.AddDbContext<DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

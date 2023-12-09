@@ -5,8 +5,8 @@ using Quartz;
 
 public class JobExample : IJob
 {
-    private readonly AppDbContext _appDbContext;
-    public JobExample(AppDbContext appDbContext)
+    private readonly DBContext _appDbContext;
+    public JobExample(DBContext appDbContext)
     {
         _appDbContext = appDbContext;
     }

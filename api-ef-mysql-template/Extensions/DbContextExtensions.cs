@@ -1,14 +1,13 @@
-﻿using api_ef_mysql_template.Models.Database;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-public static class AppDbContextExtensions
+public static class DbContextExtensions
 {
-    public static int ExecuteSqlCommand(this AppDbContext context, string sql, Dictionary<string, object> parameters = null)
+    public static int ExecuteSqlCommand(this DbContext context, string sql, Dictionary<string, object> parameters = null)
     {
         using (var connection = context.Database.GetDbConnection())
         {
@@ -35,7 +34,7 @@ public static class AppDbContextExtensions
             }
         }
     }
-    public static IEnumerable<IDictionary<string, object>> SqlQuery(this AppDbContext context, string sql, Dictionary<string, object> parameters = null)
+    public static IEnumerable<IDictionary<string, object>> SqlQuery(this DbContext context, string sql, Dictionary<string, object> parameters = null)
     {
         using (var command = context.Database.GetDbConnection().CreateCommand())
         {
@@ -77,7 +76,7 @@ public static class AppDbContextExtensions
         }
     }
     public static async Task<IEnumerable<IDictionary<string, object>>> ExecuteStoredProcedure(
-    this AppDbContext context, string storedProcedureName, Dictionary<string, object> parameters = null)
+    this DbContext context, string storedProcedureName, Dictionary<string, object> parameters = null)
     {
         var connection = context.Database.GetDbConnection();
         var command = connection.CreateCommand();
@@ -118,7 +117,7 @@ public static class AppDbContextExtensions
         }
     }
     public static async Task<ResponseResult<IDictionary<string, object>>> ExecuteQueryOrStoredProcedure(
-    this AppDbContext context, string queryOrProcedure,
+    this DbContext context, string queryOrProcedure,
     Dictionary<string, object> parameters = null, PaginationOptions pagination = null)
     {
         var connection = context.Database.GetDbConnection();
@@ -211,7 +210,7 @@ public static class AppDbContextExtensions
         public int TotalPages { get; set; }
         public long TotalDatas { get; set; }
     }
-    public static void DisposeContext(this AppDbContext context)
+    public static void DisposeContext(this DbContext context)
     {
         context.Dispose();
     }
